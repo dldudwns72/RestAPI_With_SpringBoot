@@ -34,17 +34,21 @@
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<!-- <scope> runtime </scope> H2는 In-Memory 형식이라 실제로 서버에 올라가면 다른 DB와 충돌이 날 수 있다. -->
-			<scope>test</scope>
+			<!-- <scope>test</scope>  -->
+			<!--  Runtime시 DB 설정이 안되어있다면 기본적으로 H2가 설정되어 실행되기 떄문에 잠시 막아놓는다 -->
 		</dependency>
+		
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<scope>runtime</scope>
+			<!--  <scope>runtime</scope>  -->
 		</dependency>
+		
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
+			<!-- optional 설정은 다른 프로젝트에서 설정 시 들어가는것에 의존성이 추가되지 않음 -->
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
