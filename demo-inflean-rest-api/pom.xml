@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.4.2</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>me.whiteship</groupId>
 	<artifactId>demo-inflean-rest-api</artifactId>
@@ -33,17 +34,18 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<!-- <scope> runtime </scope> H2는 In-Memory 형식이라 실제로 서버에 올라가면 다른 DB와 충돌이 날 수 있다. -->
-			<!-- <scope>test</scope>  -->
-			<!--  Runtime시 DB 설정이 안되어있다면 기본적으로 H2가 설정되어 실행되기 떄문에 잠시 막아놓는다 -->
+			<!-- <scope> runtime </scope> H2는 In-Memory 형식이라 실제로 서버에 올라가면 다른 DB와 충돌이 
+				날 수 있다. -->
+			<!-- <scope>test</scope> -->
+			<!-- Runtime시 DB 설정이 안되어있다면 기본적으로 H2가 설정되어 실행되기 떄문에 잠시 막아놓는다 -->
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<!--  <scope>runtime</scope>  -->
+			<!-- <scope>runtime</scope> -->
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -60,6 +62,14 @@
 			<artifactId>spring-restdocs-mockmvc</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- Junit4 RunWith 설정 안되있어서 라이브러리 추가 -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
