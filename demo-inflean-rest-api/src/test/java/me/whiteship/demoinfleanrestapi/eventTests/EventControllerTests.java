@@ -1,9 +1,9 @@
 package me.whiteship.demoinfleanrestapi.eventTests;
 
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.time.LocalDateTime;
@@ -60,12 +60,13 @@ public class EventControllerTests {
 		Mockito.when(eventRepository.save(event)).thenReturn(event);
 									
 		mockMvc.perform(post("/api/events/")
-				.contentType(MediaType.APPLICATION_JSON_UTF8) // contentType 설정 
-				.accept(MediaTypes.HAL_JSON) // 어떠한 응답을 원한다
-				.content(objectMapper.writeValueAsString(event))) // event 객체를 받아서 JSON화(Serializaion)을 해준다.
-		.andDo(print())
+				.contentType(MediaType.APPLICATION_JSON) // contentType 설정  요청 본문에 JSON을 넘겨 줄것이라는 선언
+				.accept(MediaTypes.HAL_JSON) // 어떠한 응답(HAL_JSON)을 원한다
+				.content(objectMapper.writeValueAsString(event)) // content 타입을 JSON으로 주어야 한다  writeValueAsString(객체) => 해당 객체를 JSON화 해서 보여준다.
+				) // event 객체를 받아서 JSON화(Serializaion)을 해준다.
+		.andDo(print()) // 실제 응답을 볼 수 있는 명령어
 		.andExpect(status().isCreated()) // JSON 예상 응답 201
-		.andExpect((ResultMatcher) jsonPath("id").exists())
+		.andExpect(jsonPath("id").exists()) // id 가 있는지 확인하는 테스트
 		.andExpect(header().exists(HttpHeaders.LOCATION))
 		.andExpect(header().string(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE))
 		;
