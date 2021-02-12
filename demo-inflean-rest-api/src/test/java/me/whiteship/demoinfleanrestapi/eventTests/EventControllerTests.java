@@ -28,6 +28,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import me.whiteship.demoinfleanrestapi.events.Event;
 import me.whiteship.demoinfleanrestapi.events.EventRepository;
+import me.whiteship.demoinfleanrestapi.events.EventStatus;
 
 @RunWith(SpringRunner.class)
 //@WebMvcTest
@@ -62,6 +63,7 @@ public class EventControllerTests {
 							.location("강남역 D2 스타텀 팩토리")
 							.free(true)
 							.offline(false)
+							.eventStatus(EventStatus.PUBLISHED)
 							.build();
 						
 		
@@ -79,7 +81,7 @@ public class EventControllerTests {
 		.andExpect(header().string(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE))
 		.andExpect(jsonPath("id").value(Matchers.not(100))) // id 값이 100이면 안된다
 		.andExpect(jsonPath("free").value(Matchers.not(true))) // 이 에러를 해결 하려면 DTO를 사용하여 해결
-		
+		.andExpect(jsonPath("eventStatus").value(Matchers.not(EventStatus.DRAFT.name())))
 		;
 		
 	}
