@@ -1,5 +1,6 @@
 package me.whiteship.demoinfleanrestapi.events;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -21,18 +22,24 @@ public class EventController {
 	
 	private final EventRepository eventRepository;
 	
-	public EventController(EventRepository eventRepository) {
+	private final ModelMapper modelMapper;
+	
+	public EventController(EventRepository eventRepository, ModelMapper modelMapper) {
 		// 생성자가 하나만 있고 생성자로 받아올 파라미터가 이미 Bean으로 등록되어있다면 Autowired 생략 가능 Spring 4.X 이상부터 
 		this.eventRepository = eventRepository;
+		this.modelMapper = modelMapper;
 	}
 	
 	// 상위 코드는 @Autowired EventRepository eventRepository 와 동일한 코드
 	
 	@PostMapping
-	public ResponseEntity createEvent(@RequestBody Event event) {
+	public ResponseEntity createEvent(@RequestBody EventDto eventDto) {
 //		URI createdUri = linkTo(methodOn(EventController.class).createEvent()).slash("{id}").toUri();
 //		return ResponseEntity.created(createdUri).build();
 		// 상위 코드 201 응답을 만들기 위한 방법
+		
+		// 기존 대로라면 Event event = Event.builder()안에 값 다 설정해 주고 Dto에 값을 넣어줘야 하지만 ModelMapper 사용으로 DTO를 도메인 객체로 값 을 복사해준다. maven 설정 필요
+		Event event = modelMapper.map(eventDto, Event.class);
 		
 		Event newEvent = this.eventRepository.save(event);
 		URI createdUri = linkTo(EventController.class).slash(newEvent.getId()).toUri();

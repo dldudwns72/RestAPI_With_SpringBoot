@@ -63,6 +63,12 @@
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>2.3.1</version>
+		</dependency>
+
 		<!-- Junit4 RunWith 설정 안되있어서 라이브러리 추가 -->
 		<dependency>
 			<groupId>junit</groupId>
