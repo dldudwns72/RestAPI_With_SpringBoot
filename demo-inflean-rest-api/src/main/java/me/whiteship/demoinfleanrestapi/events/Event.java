@@ -37,7 +37,7 @@ public class Event {
 	private boolean offline;
 	private boolean free;
 	@Enumerated(EnumType.STRING) // Enum의 Index 값 충돌 방지로 Type STRING 사용 권장
-	private EventStatus eventStatus;
+	private EventStatus eventStatus = EventStatus.DRAFT; // 초기값 설정
 	
 	
 	

@@ -27,6 +27,7 @@ import org.springframework.test.web.servlet.ResultMatcher;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import me.whiteship.demoinfleanrestapi.events.Event;
+import me.whiteship.demoinfleanrestapi.events.EventDto;
 import me.whiteship.demoinfleanrestapi.events.EventRepository;
 import me.whiteship.demoinfleanrestapi.events.EventStatus;
 
@@ -50,8 +51,7 @@ public class EventControllerTests {
 	// 201을 던져줘야 하는데 404를 던져준다.
 	@Test
 	public void createEvent() throws Exception {
-		Event event = Event.builder()
-							.id(100)
+		EventDto event = EventDto.builder()
 							.name("Spring")
 							.description("REST API")
 							.beginEnrollmentDateTime(LocalDateTime.of(2018, 11, 23, 14, 21))
@@ -61,13 +61,8 @@ public class EventControllerTests {
 							.maxPrice(200)
 							.limitOfEnrollment(100)
 							.location("강남역 D2 스타텀 팩토리")
-							.free(true)
-							.offline(false)
-							.eventStatus(EventStatus.PUBLISHED)
 							.build();
 						
-		
-//		Mockito.when(eventRepository.save(event)).thenReturn(event);
 									
 		mockMvc.perform(post("/api/events/")
 				.contentType(MediaType.APPLICATION_JSON) // contentType 설정  요청 본문에 JSON을 넘겨 줄것이라는 선언
@@ -85,6 +80,37 @@ public class EventControllerTests {
 		;
 		
 	}
+	
+	@Test
+	public void createEvent_Bad_Reqeust() throws Exception {
+		Event event = Event.builder()
+							.id(100)
+							.name("Spring")
+							.description("REST API")
+							.beginEnrollmentDateTime(LocalDateTime.of(2018, 11, 23, 14, 21))
+							.closeEnrollmentDateTime(LocalDateTime.of(2018, 11, 24, 14, 21))
+							.beginEventDateTime(LocalDateTime.of(2018, 11, 25, 14, 21))
+							.basePrice(100)
+							.maxPrice(200)
+							.limitOfEnrollment(100)
+							.location("강남역 D2 스타텀 팩토리")
+							.free(true)
+							.offline(false)
+							.eventStatus(EventStatus.PUBLISHED)
+							.build();
+						
+									
+		mockMvc.perform(post("/api/events/")
+				.contentType(MediaType.APPLICATION_JSON) // contentType 설정  요청 본문에 JSON을 넘겨 줄것이라는 선언
+				.accept(MediaTypes.HAL_JSON) // 어떠한 응답(HAL_JSON)을 원한다
+				.content(objectMapper.writeValueAsString(event)) // content 타입을 JSON으로 주어야 한다  writeValueAsString(객체) => 해당 객체를 JSON화 해서 보여준다.
+				) // event 객체를 받아서 JSON화(Serializaion)을 해준다.
+		.andDo(print()) // 실제 응답을 볼 수 있는 명령어
+		.andExpect(status().isBadRequest()) // BadRequest 반환
+		;
+		
+	}
+	
 	
 	
 	
