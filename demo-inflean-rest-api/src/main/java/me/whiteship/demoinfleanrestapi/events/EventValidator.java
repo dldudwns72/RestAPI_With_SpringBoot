@@ -22,6 +22,8 @@ public class EventValidator {
 			errors.rejectValue("endEventDateTime", "wrongValue" , "Worng DateTime");
 		}
 		
+		System.out.println("eventDto DateTime 확인 :"+eventDto.getEndEventDateTime());
+		
 		// TODO BeginEventDateTIme
 		// TODO CloseEventDateTime
 

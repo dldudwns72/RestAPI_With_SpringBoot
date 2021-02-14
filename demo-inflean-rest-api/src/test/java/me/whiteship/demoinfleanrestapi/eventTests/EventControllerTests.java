@@ -118,11 +118,13 @@ public class EventControllerTests {
 	@Test
 	@DisplayName("잘못된 입력값 에러 테스트")
 	public void createEvent_Bad_Request_Wrong_Input() throws Exception {
-		EventDto eventDto = EventDto.builder().name("Spring").description("REST API")
+		EventDto eventDto = EventDto.builder()
+				.name("Spring")
+				.description("REST API")
 				.beginEnrollmentDateTime(LocalDateTime.of(2018, 11, 26, 14, 21))
 				.closeEnrollmentDateTime(LocalDateTime.of(2018, 11, 25, 14, 21))
 				.beginEventDateTime(LocalDateTime.of(2018, 11, 24, 14, 21))  // 이벤트가 끝나는 날짜가 시작하는 날짜보다 더 빠른 경우
-				.endEventDateTime(LocalDateTime.of(2018, 11, 22, 14, 21))
+				.endEventDateTime(LocalDateTime.of(2017, 11, 22, 14, 21))
 				.basePrice(10000)
 				.maxPrice(200)
 				.limitOfEnrollment(100)
