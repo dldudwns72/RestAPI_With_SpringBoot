@@ -43,12 +43,18 @@ public class EventController {
 //		URI createdUri = linkTo(methodOn(EventController.class).createEvent()).slash("{id}").toUri();
 //		return ResponseEntity.created(createdUri).build();
 		// 상위 코드 201 응답을 만들기 위한 방법
+		if(errors.hasErrors()) {
+			// errors는 JSON으로 곧 바로 변한이 안된다. Serliazation이 되지 않기 때문 ErrorSerializer 설정
+			 return ResponseEntity.badRequest().body(errors);
+		}
+
 
 		eventValidator.validate(eventDto, errors);
 
 		if (errors.hasErrors()) {
 			return ResponseEntity.badRequest().build();
 		}
+		
 
 		// 기존 대로라면 Event event = Event.builder()안에 값 다 설정해 주고 Dto에 값을 넣어줘야 하지만
 		// ModelMapper 사용으로 DTO를 도메인 객체로 값 을 복사해준다. maven 설정 필요

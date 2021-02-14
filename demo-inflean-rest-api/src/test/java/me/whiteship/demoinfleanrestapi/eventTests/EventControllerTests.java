@@ -133,7 +133,14 @@ public class EventControllerTests {
 
 		this.mockMvc.perform(post("/api/events/").contentType(MediaType.APPLICATION_JSON)
 				.content(this.objectMapper.writeValueAsString(eventDto)))
-				.andExpect(status().isBadRequest());
+				.andExpect(status().isBadRequest())
+				// 왜 쓰는것인지 ?? 배열의 처음 값 어디서 가져오는지?
+//				.andExpect(jsonPath("$[0].objectName").exists())
+//				.andExpect(jsonPath("$[0].field").exists())
+//				.andExpect(jsonPath("$[0].defaultMessage").exists())
+//				.andExpect(jsonPath("$[0].code").exists())
+//				.andExpect(jsonPath("$[0].rejectedValue").exists())
+				;
 	}
 
 }
